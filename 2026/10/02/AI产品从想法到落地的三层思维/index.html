@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+<meta name="description" content="先确认产品要解决什么问题，再理顺信息如何流动，最后选择合适的工具。用 MVP、数据分层与选型原则连接想法和落地。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从想法到落地：AI 产品的三层决策框架">
+<meta property="og:url" content="https://lmink9418.github.io/2026/10/02/AI%E4%BA%A7%E5%93%81%E4%BB%8E%E6%83%B3%E6%B3%95%E5%88%B0%E8%90%BD%E5%9C%B0%E7%9A%84%E4%B8%89%E5%B1%82%E6%80%9D%E7%BB%B4/index.html">
+<meta property="og:site_name" content="lmink 的博客">
+<meta property="og:description" content="先确认产品要解决什么问题，再理顺信息如何流动，最后选择合适的工具。用 MVP、数据分层与选型原则连接想法和落地。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lmink9418.github.io/img/covers/ai-agent-components-google.png">
+<meta property="article:published_time" content="2026-10-02T09:39:02.000Z">
+<meta property="article:modified_time" content="2026-10-02T09:39:02.000Z">
+<meta property="article:author" content="lmink">
+<meta property="article:tag" content="AI 产品">
+<meta property="article:tag" content="产品思维">
+<meta property="article:tag" content="架构思维">
+<meta property="article:tag" content="技术选型">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lmink9418.github.io/img/covers/ai-agent-components-google.png">
+
+    <meta name="keywords" content="lmink">
+
+
+<title >从想法到落地：AI 产品的三层决策框架</title>
+
+
+    <link href='/img/lmink-avatar.svg?v=2.2.7' rel='icon' type='image/svg+xml' sizes='16x16' ></link>
+
+
+    <link href='/img/lmink-avatar.svg?v=2.2.7' rel='icon' type='image/svg+xml' sizes='32x32' ></link>
+
+
+    <link href='/img/lmink-avatar.svg?v=2.2.7' rel='apple-touch-icon' sizes='180x180' ></link>
+
+
+
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0.31/dist/fancybox.css">
+
+    
+    
+
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<script>window.ASYNC_CONFIG = {"hostname":"lmink9418.github.io","author":"lmink","root":"/","typed_text":["lmink","落雪无痕朔雪清"],"theme_version":"2.2.7","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/lmink-avatar.svg","icon16":"/img/lmink-avatar.svg","icon32":"/img/lmink-avatar.svg","apple_touch_icon":"/img/lmink-avatar.svg","webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-10-02 17:39:02"};</script>
+<script src="/js/language.js?v=20261005-6"></script>
+
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.7" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !== 'auto' ? ASYNC_CONFIG.theme.default : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'style-light' : 'style-dark');
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark');
+</script>
+
+
+
+    
+<link rel="stylesheet" href="/css/lmink.css?v=20261007-6.css">
+
+    
+
+
+
+ 
+
+<script src="/js/analytics.js?v=20261005-2" defer
+    data-site-origin="https://lmink9418.github.io"
+    data-counter-code="lmink9418"></script>
+
+
+
+<meta name="giscus:backlink" content="https://lmink9418.github.io/2026/10/02/AI%E4%BA%A7%E5%93%81%E4%BB%8E%E6%83%B3%E6%B3%95%E5%88%B0%E8%90%BD%E5%9C%B0%E7%9A%84%E4%B8%89%E5%B1%82%E6%80%9D%E7%BB%B4/">
+
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="lmink 的博客" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="lmink 的博客" type="application/rss+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <!-- 首屏直接显示内容，不使用阻塞式预加载动画。 -->
+
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+    <div class="container">
+        <div class="trm-left-side">
+            <!-- 顶部导航不显示站点头像或空链接。 -->
+
+        </div>
+        <div class="trm-right-side">
+            <!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/categories/" target="">
+                    分类与标签
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/projects/" target="">
+                    项目
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/about/" target="">
+                    关于我
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/subscribe/" target="">
+                    订阅
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+            <div class="lmink-header-tools">
+                
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <span aria-hidden="true"><i class="iconfont far fa-sun"></i></span>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox" aria-label="切换深色模式">
+            <label class="trm-swich" for="trm-swich" aria-hidden="true"></label>
+            <span aria-hidden="true"><i class="iconfont far fa-moon"></i></span>
+        </div>
+    </div>
+
+
+                <button type="button" class="lmink-language-toggle" aria-label="Switch to English" hidden>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h12M9 3v2M12 5c-1 6-4 9-9 12M5 8c1 3 3 5 6 7M13 21l4-10 4 10M14.5 17h5"/></svg>
+                    <span class="lmink-language-label">EN</span>
+                </button>
+            </div>
+            
+        </div>
+        <button type="button" class="trm-menu-btn" aria-label="打开导航菜单" aria-expanded="false">
+            <span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+
+<main class="lmink-reading">
+    <div class="container">
+        
+<header class="lmink-reading-header" data-article-url="https://lmink9418.github.io/2026/10/02/AI%E4%BA%A7%E5%93%81%E4%BB%8E%E6%83%B3%E6%B3%95%E5%88%B0%E8%90%BD%E5%9C%B0%E7%9A%84%E4%B8%89%E5%B1%82%E6%80%9D%E7%BB%B4/">
+    <a class="lmink-back" href="/">返回首页</a>
+    <h1 lang="zh-CN">从想法到落地：AI 产品的三层决策框架</h1>
+    <div class="lmink-reading-meta">
+        <span><span>发布于</span> <time datetime="2026-10-02T09:39:02.000Z">2026-10-02</time></span>
+        
+        
+        <span data-page-views data-counter-code="lmink9418"><span>阅读</span> <span data-view-count>—</span></span>
+        
+        
+            <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a>
+        
+    </div>
+    
+    <button type="button" class="lmink-copy-article" hidden>复制文章链接</button>
+    <span class="lmink-copy-status lmink-visually-hidden" role="status" aria-live="polite"></span>
+</header>
+<div class="lmink-reading-grid">
+    
+    
+    <aside class="lmink-reading-toc">
+        <details open>
+            <summary>文章目录</summary>
+            <nav aria-label="文章目录" lang="zh-CN"><ol class="lmink-toc"><li class="lmink-toc-item lmink-toc-level-2" title="一、产品思维：先确认问题值得解决"><a rel="nofollow" class="lmink-toc-link" href="#一、产品思维：先确认问题值得解决"><span class="lmink-toc-text">一、产品思维：先确认问题值得解决</span></a><ol class="lmink-toc-child"><li class="lmink-toc-item lmink-toc-level-3" title="MVP 不是半成品，而是最小闭环"><a rel="nofollow" class="lmink-toc-link" href="#MVP-不是半成品，而是最小闭环"><span class="lmink-toc-text">MVP 不是半成品，而是最小闭环</span></a></li></ol></li><li class="lmink-toc-item lmink-toc-level-2" title="二、架构思维：把功能清单变成价值流"><a rel="nofollow" class="lmink-toc-link" href="#二、架构思维：把功能清单变成价值流"><span class="lmink-toc-text">二、架构思维：把功能清单变成价值流</span></a><ol class="lmink-toc-child"><li class="lmink-toc-item lmink-toc-level-3" title="分层的意义，是保留事实与退路"><a rel="nofollow" class="lmink-toc-link" href="#分层的意义，是保留事实与退路"><span class="lmink-toc-text">分层的意义，是保留事实与退路</span></a></li></ol></li><li class="lmink-toc-item lmink-toc-level-2" title="三、技术选型：选择合适的工具，而不是最炫的工具"><a rel="nofollow" class="lmink-toc-link" href="#三、技术选型：选择合适的工具，而不是最炫的工具"><span class="lmink-toc-text">三、技术选型：选择合适的工具，而不是最炫的工具</span></a></li><li class="lmink-toc-item lmink-toc-level-2" title="四、把三种思维连成一条决策链"><a rel="nofollow" class="lmink-toc-link" href="#四、把三种思维连成一条决策链"><span class="lmink-toc-text">四、把三种思维连成一条决策链</span></a></li></ol></nav>
+        </details>
+    </aside>
+    
+    <div class="lmink-reading-body">
+        <div class="trm-card">
+            <article id="article-container" class="trm-publication">
+    <figure class="lmink-post-cover"><img src="/img/covers/ai-agent-components-google.png" alt="Google Cloud AI Agent 基本组成：Agent、模型、工具与运行环境" style="height: auto;"  data-tag='post-image' onload='this.onload=null;this.style.opacity=1;' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></figure>
+
+<p>封面来源：<a target="_blank" rel="noopener" href="https://cloud.google.com/blog/topics/partners/building-scalable-ai-agents-design-patterns-with-agent-engine-on-google-cloud">Google Cloud：Building scalable AI agents</a>。</p>
+<p>AI 编程降低了实现成本，却没有替我们消除决策。代码可以让 AI 帮忙写，但做什么、如何组织、为什么选择某项技术，仍然需要人来判断。</p>
+<p>最近读了三篇分别讨论产品思维、架构思维和技术选型的文章。它们看似属于三个领域，实际构成了一条连续的决策链：</p>
+<blockquote>
+<p>产品思维回答「做什么」，架构思维回答「东西怎么走」，技术选型回答「用什么实现」。</p>
+</blockquote>
+<p>顺序一旦颠倒，就很容易出现一种熟悉的忙碌：先挑框架、搭界面、接模型，做了不少功能，最后却说不清产品究竟解决了什么问题。</p>
+<h2 id="一、产品思维：先确认问题值得解决"><a href="#一、产品思维：先确认问题值得解决" class="headerlink" title="一、产品思维：先确认问题值得解决"></a>一、产品思维：先确认问题值得解决</h2><p>产品的起点不应是「我想做一个什么」，而应是「什么问题反复困扰着我」。对于个人开发者来说，最可靠的需求通常不在趋势报告里，而在每天使用的工具、重复执行的劳动，以及那些不得不绕路完成的操作里。</p>
+<p>这类需求至少有三个特点：发生频繁、影响明确、用户愿意付出时间或成本解决。它们与偶尔冒出的「要是有这个功能就好了」不同。后者可能只是痒点，前者才更接近痛点。</p>
+<p>找到问题后，还要观察现有工具为什么没有解决它。大产品往往服务最大公约数，很难照顾某个职业、某类内容或某种工作流的特殊需求。个人产品的机会，常常就藏在这些场景、人群和体验的边角里。</p>
+<p>不过，「小众」不是不做判断的借口。现成工具没人提供某项能力，可能是大厂顾不上，也可能是需求根本不成立。竞品分析的重点不是罗列功能，而是弄清三个问题：用户为什么继续忍受现有方案、换走的人去了哪里、共同的不满究竟是什么。</p>
+<h3 id="MVP-不是半成品，而是最小闭环"><a href="#MVP-不是半成品，而是最小闭环" class="headerlink" title="MVP 不是半成品，而是最小闭环"></a>MVP 不是半成品，而是最小闭环</h3><p>确定方向之后，最容易犯的错误是立即列功能。功能越列越多，真正要验证的核心价值反而被埋住。</p>
+<p>更有效的做法，是用一页纸回答六个问题：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>要确认的内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用户</td>
+<td>第一版究竟服务谁</td>
+</tr>
+<tr>
+<td>痛点</td>
+<td>要解决哪个具体问题</td>
+</tr>
+<tr>
+<td>输入</td>
+<td>用户提供什么</td>
+</tr>
+<tr>
+<td>处理</td>
+<td>产品完成什么关键动作</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>用户最终得到什么</td>
+</tr>
+<tr>
+<td>不做什么</td>
+<td>哪些需求明确留到以后</td>
+</tr>
+</tbody></table>
+<p>MVP 可以简陋，但必须完整。一个 AI 产品的第一版，不必先有精美界面，却应当走通一次真实的「输入–处理–输出」价值链。若 AI 只是界面上的占位按钮，核心价值仍未得到验证。</p>
+<p>验证也应尽可能接近真实使用。个人工具可以先用纸笔模拟，再用现成工具手动跑流程，最后连续使用一段时间。关键不是自己是否喜欢这个想法，而是产品是否自然进入工作流，能否减少原来的麻烦。</p>
+<h2 id="二、架构思维：把功能清单变成价值流"><a href="#二、架构思维：把功能清单变成价值流" class="headerlink" title="二、架构思维：把功能清单变成价值流"></a>二、架构思维：把功能清单变成价值流</h2><p>产品定义说明了要做什么，架构则要解释这些东西如何流动。</p>
+<p>面对个人工具或轻量 AI 产品，可以先不讨论数据库、框架和部署，只回答三个问题：</p>
+<ol>
+<li><strong>进</strong>：信息从哪里来，以什么格式进入，由谁触发？</li>
+<li><strong>存</strong>：信息分成哪些层，每层保存什么，哪些内容允许修改？</li>
+<li><strong>取</strong>：谁在什么情况下，以什么形式得到结果？</li>
+</ol>
+<p>「取」最容易被忽略，也最值得先想。许多知识工具擅长收集和保存，却没有设计资料如何回到具体任务中。结果是内容越积越多，真正需要时仍要重新翻找。</p>
+<p>因此，架构设计可以从输出倒推：先描述用户最终要得到的答案、报告或行动，再判断中间需要保存什么，最后决定输入哪些原料。这样形成的不是孤立功能，而是一条可以走通的数据流。</p>
+<h3 id="分层的意义，是保留事实与退路"><a href="#分层的意义，是保留事实与退路" class="headerlink" title="分层的意义，是保留事实与退路"></a>分层的意义，是保留事实与退路</h3><p>存储分层并不等于一开始就引入复杂基础设施。它首先是一种信息边界，例如：</p>
+<ul>
+<li>原料层保存原始资料，尽量只读，承担事实来源；</li>
+<li>加工层保存 AI 整理后的摘要、标签和判断；</li>
+<li>汇总层把多份材料编译成主题结论；</li>
+<li>索引层帮助人和 AI 找到需要的内容。</li>
+</ul>
+<p>这种分层的价值不是形式整齐，而是避免加工结果覆盖原始材料。当 AI 的判断出现偏差时，可以回到原文核对；当处理规则升级时，也能重新生成下游内容。</p>
+<p>架构还要同时考虑两件事：能否继续生长，以及出错后能否恢复。第一版不需要实现所有功能，但可以保留清晰的分层和扩展位置；数据处理则应尽量避免不可逆覆盖，让关键步骤可以追踪和回退。</p>
+<p>这与过度设计并不矛盾。功能仍然只做 MVP 所需的部分，架构只是为未来变化保留低成本的路径。架构文档也不是一次完成的蓝图，而应随着真实使用持续修订。</p>
+<h2 id="三、技术选型：选择合适的工具，而不是最炫的工具"><a href="#三、技术选型：选择合适的工具，而不是最炫的工具" class="headerlink" title="三、技术选型：选择合适的工具，而不是最炫的工具"></a>三、技术选型：选择合适的工具，而不是最炫的工具</h2><p>有了产品定义和数据流，技术选型才有明确对象。此时需要决定的不是「最近什么技术最火」，而是架构中的每个节点分别需要什么能力。</p>
+<p>AI 时代的技术选型更像采购：优先寻找成熟工具，再让 AI 编写少量胶水代码，把它们组合起来。选型的目标不是证明技术先进，而是降低交付、修改和维护的总成本。</p>
+<p>对于个人项目和 MVP，可以优先考虑四个方向：</p>
+<ul>
+<li><strong>主流</strong>：语言、框架和库拥有较多文档、案例与社区讨论，AI 也更容易生成稳定代码；</li>
+<li><strong>轻量</strong>：能用简单方案解决，就暂不引入额外组件；</li>
+<li><strong>可维护</strong>：本地能运行、数据容易迁移、故障容易定位；</li>
+<li><strong>有生命力</strong>：项目仍在维护，问题有人回应，版本和许可清楚。</li>
+</ul>
+<p>这些原则不是固定排序。涉及多人协作、敏感数据、合规、并发或长期服务时，云部署、数据库和权限系统可能是必要成本。「文件优先」「本地优先」适合降低早期验证成本，却不能替代具体场景的安全与可靠性判断。</p>
+<p>AI 可以帮助列出候选方案、比较优缺点和生成验证代码，但最终选择仍要人工核对。至少要检查官方文档、开源许可、近期维护情况、已知问题、数据边界和退出成本。Star 数只能说明关注度，不能单独证明项目适合当前需求。</p>
+<p>还有一条很实用的分工原则：机械任务交给确定性脚本，语义任务交给 AI。扫描文件、统计字段、生成索引适合脚本；摘要、分类和观点整合适合模型。让两者各自承担擅长的部分，通常比把全部流程都交给模型更稳定，也更容易排错。</p>
+<h2 id="四、把三种思维连成一条决策链"><a href="#四、把三种思维连成一条决策链" class="headerlink" title="四、把三种思维连成一条决策链"></a>四、把三种思维连成一条决策链</h2><p>产品、架构和技术选型不是三份互不相干的文档，而是逐层收敛的过程：</p>
+<ol>
+<li>用真实痛点确定一个最小价值闭环，形成 MVP 定义；</li>
+<li>把输入、处理和输出展开成「进、存、取」数据流；</li>
+<li>为数据流中的每个节点选择最简单、可替换、可验证的工具；</li>
+<li>做出第一版，在真实使用中收集证据，再回头修改产品和架构。</li>
+</ol>
+<p>这条链路也允许反向反馈。技术约束可能迫使产品缩小范围，运行成本可能改变架构，真实使用也可能证明最初的痛点并不成立。重要的不是死守第一版，而是让每次调整都有依据。</p>
+<p>最终，AI 真正改变的是试错成本，而不是判断的重要性。实现越来越快以后，产品方向、信息流和取舍能力反而更稀缺。先想清楚做什么，再理顺东西怎么走，最后选择合适的工具，才是把一个想法稳定变成产品的起点。</p>
+
+</article>
+            
+
+        </div>
+        <section class="trm-card lmink-author-note" aria-label="关于作者">
+            <img src="/img/lmink-avatar.jpg" width="48" height="48" alt="" loading="lazy" decoding="async">
+            <div>
+                <a href="/about/">lmink · <span lang="zh-CN">落雪无痕朔雪清</span></a>
+                <p>银行金融科技技术人，记录 Java、AI 实践与生活。</p>
+                <a href="/subscribe/">订阅博客 →</a>
+            </div>
+        </section>
+        
+
+<section class="trm-card lmink-related" aria-labelledby="lmink-related-title">
+  <h2 id="lmink-related-title">继续阅读</h2>
+  <ul>
+    
+    <li>
+      <a href="/2026/06/30/%E9%95%BF%E5%A4%A7%E5%90%8E%E6%88%91%E4%BB%AC%E5%A6%82%E4%BD%95%E7%BB%A7%E7%BB%AD%E7%88%B1%E5%8A%A8%E6%BC%AB/">憧憬、代入、解离：长大后我们如何继续爱动漫</a>
+      <p>用憧憬、代入和解离理解看番心态的变化：长大后可以退开欣赏，也可以成为创作者，把故事曾带来的治愈传递下去。</p>
+    </li>
+    
+    <li>
+      <a href="/2026/06/20/%E7%BE%BD%E6%AF%9B%E7%90%83%E8%AE%AD%E7%BB%83%E8%AE%B0%E5%BD%95/">羽毛球训练记录：2026 年 3 月至 6 月</a>
+      <p>整理 2026 年 3 月至 6 月的课堂笔记，回顾网前、后场、发力和步伐要点，保留尚未理解的动作与下一阶段待改进问题。</p>
+    </li>
+    
+    <li>
+      <a href="/2026/04/16/%E8%B5%9B%E5%8D%9A%E6%9C%8B%E5%85%8B%E8%BE%B9%E7%BC%98%E8%A1%8C%E8%80%85%E8%A7%82%E5%90%8E%E6%84%9F/">《赛博朋克：边缘行者》观后感：夜之城没有天使</a>
+      <p>从露西、曼恩与大卫的关系看夜之城的残酷：谁接住了大卫，他又如何成为别人的支点，以及感情线留下的遗憾。</p>
+    </li>
+    
+  </ul>
+</section>
+
+
+        
+<section class="trm-card lmink-comments" aria-label="评论"
+    data-repo="lmink9418/lmink9418.github.io" data-repo-id="R_kgDOU_b4UA"
+    data-category="Announcements" data-category-id="DIC_kwDOU_b4UM4DHQGt">
+    <div class="lmink-comments-heading">
+        <h2>评论</h2>
+        <a href="https://github.com/lmink9418/lmink9418.github.io/discussions" target="_blank" rel="noopener noreferrer" aria-label="前往 GitHub 讨论区">GitHub ↗</a>
+    </div>
+    <p class="lmink-comments-note">登录 GitHub，参与讨论。</p>
+    <button class="trm-btn" type="button" data-load-comments hidden>加载评论</button>
+    <p data-comment-status role="status" aria-live="polite"></p>
+    <div class="giscus"></div>
+</section>
+<script src="/js/comments.js?v=20261005-3" defer></script>
+
+
+    </div>
+</div>
+<script src="/js/article-tools.js?v=20261005-2" defer></script>
+
+<script src="/js/page-views.js?v=20261005-2" defer></script>
+
+
+    </div>
+</main>
+
+<footer class="lmink-footer">
+    <div class="container lmink-footer-inner">
+        <a class="lmink-footer-brand" href="/">
+            <img src="/img/lmink-avatar.jpg" width="24" height="24" alt="" loading="lazy" decoding="async">
+            <span>Hi, lmink</span>
+        </a>
+        <span class="lmink-footer-powered"><span><span>由</span> <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a> <span>驱动</span> v6.3.0</span> <span><span>主题</span> - <a href="https://github.com/MaLuns/hexo-theme-async" target="_blank" rel="noopener noreferrer">Async</a> v2.2.7</span></span>
+        <span class="lmink-footer-copyright">© <span data-copyright-year>2026</span> lmink<span>，版权所有，转载请注明出处。</span></span>
+        <a href="/sitemap.xml">Sitemap</a>
+        <button type="button" class="lmink-live2d-toggle" hidden></button>
+    </div>
+</footer>
+
+
+            <!-- body end -->
+
+            
+
+            
+<div class="trm-fixed-container">
+    <button type="button" id="trm-back-top" class="trm-fixed-btn" aria-label="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </button>
+</div>
+
+
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0.31/dist/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.7"></script>
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.2.7"></script>
+
+<!-- CDN -->
+
+
+    
+<script src="/js/accessibility.js?v=20261004-3.js"></script>
+<script src="/js/live2d.js?v=20261005-1.js"></script>
+<script src="/js/search.js?v=20261004-1.js"></script>
+
+
+    
+
+    
+
+
+
+</body>
+
+</html>
