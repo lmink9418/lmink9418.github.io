@@ -54,6 +54,7 @@
     '搜索暂时不可用，请点击「搜索」重试。': 'Search is unavailable. Select Search to try again.',
     '搜索文章标题、标签和正文。多个关键词用空格分开，例如「AI 产品」。': 'Search titles, tags and content. Separate keywords with spaces, for example “AI 产品”. Posts are written in Chinese.',
     '打开导航菜单': 'Open navigation menu', '关闭导航菜单': 'Close navigation menu',
+    '显示密码': 'Show password', '显示': 'Show', '隐藏': 'Hide',
     '切换深色模式': 'Toggle dark mode', '联系与订阅': 'Contact and subscribe',
     '目录': 'Contents', '目录导航': 'Table of contents', '阅读模式': 'Reading mode',
     '回到顶部': 'Back to top', '单栏和双栏切换': 'Toggle sidebar',

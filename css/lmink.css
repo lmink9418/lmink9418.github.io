@@ -183,6 +183,16 @@ body::before {
   outline-offset: 2px;
   background: var(--theme-bg-color);
 }
+#hexo-blog-encrypt .lmink-password-field { position: relative; width: 100%; }
+#hexo-blog-encrypt .lmink-password-field .hbe-input-field { padding-right: 76px; }
+#hexo-blog-encrypt .lmink-password-toggle {
+  position: absolute; right: 4px; top: 4px; bottom: 4px; min-width: 64px;
+  padding: 0 10px; border: 0; border-radius: 5px;
+  background: transparent; color: var(--theme-color); font: inherit;
+  font-size: 14px; line-height: 1.5; cursor: pointer;
+}
+#hexo-blog-encrypt .lmink-password-toggle:hover { background: var(--theme-bg-color); }
+#hexo-blog-encrypt .lmink-password-toggle:focus-visible { outline: 2px solid #7b8794; outline-offset: -2px; }
 #hexo-blog-encrypt .hbe-input-label,
 #hexo-blog-encrypt .hbe-input-label-content {
   position: static; width: auto; height: auto; padding: 0;
